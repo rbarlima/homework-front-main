@@ -7,14 +7,16 @@ export type AddressType = {
 };
 
 export type UserType = {
+  // map(arg0: (user: any) => import("react/jsx-runtime").JSX.Element): import("react").ReactNode;
+  // [x: string]: any;
   id: number;
   name: string;
   age: number;
-  address: any; // пропиши типизацию
+  address: AddressType; // пропиши типизацию
 };
 
 export type UsersObjectType = {
-  myFriends: any; // пропиши типизацию
+  myFriends: UserType[]; // пропиши типизацию
 };
 
 export const HW2 = () => {
@@ -29,8 +31,8 @@ export const HW2 = () => {
 
   // ❗ Массив с данными не трогаем!
 
-  const users = {
-    myFriends:[
+  const [users, setUsers] = useState({
+    myFriends: [
       { id: 1, name: 'John', age: 25, address: { street: '123 Main St', city: 'New York' } },
       { id: 2, name: 'Alice', age: 30, address: { street: '456 Elm St', city: 'San Francisco' } },
       { id: 3, name: 'Bob', age: 35, address: { street: '789 Oak St', city: 'Seattle' } },
@@ -42,12 +44,18 @@ export const HW2 = () => {
       { id: 9, name: 'Jessica', age: 12, address: { street: '543 Willow Dr', city: 'San Francisco' } },
       { id: 10, name: 'Emily', age: 55, address: { street: '765 Aspen Blvd', city: 'Los Angeles' } },
     ]
-  }
+  });
 
   let [currentUsers, setCurrentUsers] = useState<UsersObjectType>(users);
 
-  const filterUsers = () => {
-    const filteredUsers = 'НУЖНО ПРОФИЛЬТРОВАТЬ ДРУЗЕЙ. ОСТАВЛЯЕМ ТОЛЬКО ТЕХ, КОТОРЫЕ ЖИВУТ В ГОРОДЕ LOS ANGELES';
+  // const filterUsers = () => {
+  //   const filteredUsers = 'НУЖНО ПРОФИЛЬТРОВАТЬ ДРУЗЕЙ. ОСТАВЛЯЕМ ТОЛЬКО ТЕХ, КОТОРЫЕ ЖИВУТ В ГОРОДЕ LOS ANGELES';
+  //   setCurrentUsers({ myFriends: filteredUsers });
+  // };
+
+  const filterUsers = (city: string) => {
+    const filteredUsers = users.myFriends.filter(friend => friend.address.city===city);
+    // оставить только друзей из лос анжелеса
     setCurrentUsers({ myFriends: filteredUsers });
   };
 
